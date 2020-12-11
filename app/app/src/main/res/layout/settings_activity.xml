@@ -1,16 +1,41 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<!--<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--    android:layout_width="match_parent"-->
+<!--    android:layout_height="match_parent">-->
+<!--</LinearLayout>-->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent">
 
-    <FrameLayout
-        android:id="@+id/settings"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" >
+<!--<FrameLayout-->
+<!--    android:id="@+id/settings"-->
+<!--    android:layout_width="match_parent"-->
+<!--    android:layout_height="match_parent" />-->
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/button_send" />
+<Button
+    android:id="@+id/mbutton"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:layout_centerHorizontal="true"
+    android:layout_marginTop="100dp"
+    android:background="#00f"
+    android:drawableRight="@drawable/ic_launcher_foreground"
+    android:padding="5dp"
+    android:textColorHint="#fff"
+    android:textSize="20sp"
+    android:textStyle="bold|italic" />
 
-    </FrameLayout>
-</LinearLayout>
+<Button
+    android:id="@+id/pbutton"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:layout_centerInParent="true"
+    android:background="#f00"
+    android:drawableLeft="@drawable/ic_launcher_foreground"
+    android:padding="5dp"
+    android:textColorHint="#fff"
+    android:textSize="20sp"
+    android:textStyle="bold|italic" />
+
+
+</RelativeLayout>
