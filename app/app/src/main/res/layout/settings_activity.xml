@@ -1,16 +1,35 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+    <Button
+        android:id="@+id/buttonpermission"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="requestPermission"
+        android:layout_centerHorizontal="true"
+        android:text="Request SMS permission" />
+
+    <Button
+        android:id="@+id/buttonsms"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:onClick="sendSms"
+        android:layout_below="@+id/buttonpermission"
+        android:text="Send SMS"/>
 
     <FrameLayout
         android:id="@+id/settings"
         android:layout_width="match_parent"
+        android:layout_below="@+id/buttonsms"
         android:layout_height="match_parent" >
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/button_send" />
+            android:id="@+id/button_send"
+            android:text="YOLO"/>
 
     </FrameLayout>
-</LinearLayout>
+
+</RelativeLayout>
