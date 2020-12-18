@@ -34,13 +34,37 @@
             android:layout_centerHorizontal="true"
             android:hint="Enter SMS text here" />
 
+        <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/receiver"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/edit_message"
+            android:orientation="vertical">
+            <RadioButton android:id="@+id/receiver_robbe"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Robbe"
+                android:onClick="onRadioButtonClicked"/>
+            <RadioButton android:id="@+id/receiver_vincent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Vincent"
+                android:onClick="onRadioButtonClicked"/>
+            <RadioButton android:id="@+id/receiver_klaas"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Klaas"
+                android:onClick="onRadioButtonClicked"/>
+        </RadioGroup>
+
         <Button
             android:id="@+id/buttonsms"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:onClick="sendSms"
-            android:layout_below="@+id/edit_message"
+            android:layout_below="@+id/receiver"
             android:text="Send SMS"/>
 
     </RelativeLayout>

@@ -16,15 +16,36 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.preference.PreferenceFragmentCompat;
 import android.widget.EditText;
+import android.widget.RadioButton;
+
 
 
 public class SettingsActivity extends AppCompatActivity {
 
     private static final int PERMISSION_REQUEST_SMS = 0;
+    private String phoneNumber;
+
+    public void onRadioButtonClicked(View view) {
+        boolean checked = ((RadioButton) view).isChecked();
+        switch(view.getId()) {
+            case R.id.receiver_robbe:
+                if(checked)
+                    this.phoneNumber = "+32473387251";
+                break;
+            case R.id.receiver_klaas:
+                if(checked)
+                    this.phoneNumber = "+32094073234";
+                break;
+            case R.id.receiver_vincent:
+                if(checked)
+                    this.phoneNumber = "+32485658608";
+                break;
+        }
+    }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
-                                           @NonNull int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults)
+    {
         // BEGIN_INCLUDE(onRequestPermissionsResult)
         if (requestCode == PERMISSION_REQUEST_SMS) {
             if (grantResults.length == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
@@ -40,17 +61,23 @@ public class SettingsActivity extends AppCompatActivity {
     public void sendSms(View view)
     {
         if(ActivityCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS) == PackageManager.PERMISSION_GRANTED){
-            Intent intent=new Intent(getApplicationContext(),SettingsActivity.class);
-            PendingIntent pi=PendingIntent.getActivity(getApplicationContext(), 0, intent,0);
+            if(this.phoneNumber != null) {
+                Intent intent = new Intent(getApplicationContext(), SettingsActivity.class);
+                PendingIntent pi = PendingIntent.getActivity(getApplicationContext(), 0, intent, 0);
 
-            EditText editText = (EditText) findViewById(R.id.edit_message);
-            String message = editText.getText().toString();
+                EditText editText = (EditText) findViewById(R.id.edit_message);
+                String message = editText.getText().toString();
 
-            //String message = "Het is gelukt";
-
-            //Get the SmsManager instance and call the sendTextMessage method to send message
-            SmsManager sms=SmsManager.getDefault();
-            sms.sendTextMessage("+32473387251", null, message, pi,null);
+                //Get the SmsManager instance and call the sendTextMessage method to send message
+                SmsManager sms = SmsManager.getDefault();
+                if(message != null && !message.isEmpty()) {
+                    sms.sendTextMessage(this.phoneNumber, null, message, pi, null);
+                } else {
+                    Toast.makeText(getApplicationContext(), "Cannot send an empty message!", Toast.LENGTH_LONG).show();
+                }
+            } else {
+                Toast.makeText(getApplicationContext(), "Select a receiver first!", Toast.LENGTH_LONG).show();
+            }
         } else {
             Toast.makeText(getApplicationContext(), "Enable permission first!", Toast.LENGTH_LONG).show();
         }
@@ -69,6 +96,7 @@ public class SettingsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.settings_activity);
+
         if (savedInstanceState == null) {
             getSupportFragmentManager()
                     .beginTransaction()
