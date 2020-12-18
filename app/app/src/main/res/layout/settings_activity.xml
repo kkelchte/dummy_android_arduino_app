@@ -1,35 +1,65 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <Button
-        android:id="@+id/buttonpermission"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+
+    <RelativeLayout
+        android:id="@+id/permission"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:onClick="requestPermission"
-        android:layout_centerHorizontal="true"
-        android:text="Request SMS permission" />
+        android:paddingTop="50dp"
+        android:layout_centerHorizontal="true">
 
-    <Button
-        android:id="@+id/buttonsms"
+        <Button
+            android:id="@+id/buttonpermission"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="requestPermission"
+            android:layout_centerHorizontal="true"
+            android:text="Request SMS permission" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/sms"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:onClick="sendSms"
-        android:layout_below="@+id/buttonpermission"
-        android:text="Send SMS"/>
+        android:paddingTop="50dp"
+        android:layout_below="@+id/permission"
+        android:layout_centerHorizontal="true">
 
-    <FrameLayout
+
+        <EditText android:id="@+id/edit_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:hint="Enter SMS text here" />
+
+        <Button
+            android:id="@+id/buttonsms"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:onClick="sendSms"
+            android:layout_below="@+id/edit_message"
+            android:text="Send SMS"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
         android:id="@+id/settings"
-        android:layout_width="match_parent"
-        android:layout_below="@+id/buttonsms"
-        android:layout_height="match_parent" >
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/sms"
+        android:paddingTop="50dp"
+        android:layout_centerHorizontal="true">
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
             android:id="@+id/button_send"
             android:text="YOLO"/>
 
-    </FrameLayout>
+    </RelativeLayout>
 
 </RelativeLayout>

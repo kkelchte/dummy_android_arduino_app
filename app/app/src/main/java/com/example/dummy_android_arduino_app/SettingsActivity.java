@@ -15,6 +15,8 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.preference.PreferenceFragmentCompat;
+import android.widget.EditText;
+
 
 public class SettingsActivity extends AppCompatActivity {
 
@@ -25,7 +27,6 @@ public class SettingsActivity extends AppCompatActivity {
                                            @NonNull int[] grantResults) {
         // BEGIN_INCLUDE(onRequestPermissionsResult)
         if (requestCode == PERMISSION_REQUEST_SMS) {
-            // Request for camera permission.
             if (grantResults.length == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 Toast.makeText(getApplicationContext(), "Permission granted", Toast.LENGTH_LONG).show();
             } else {
@@ -41,11 +42,15 @@ public class SettingsActivity extends AppCompatActivity {
         if(ActivityCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS) == PackageManager.PERMISSION_GRANTED){
             Intent intent=new Intent(getApplicationContext(),SettingsActivity.class);
             PendingIntent pi=PendingIntent.getActivity(getApplicationContext(), 0, intent,0);
-            String message = "HET IS GELUKT";
+
+            EditText editText = (EditText) findViewById(R.id.edit_message);
+            String message = editText.getText().toString();
+
+            //String message = "Het is gelukt";
 
             //Get the SmsManager instance and call the sendTextMessage method to send message
             SmsManager sms=SmsManager.getDefault();
-            sms.sendTextMessage("+32485658608", null, message, pi,null);
+            sms.sendTextMessage("+32473387251", null, message, pi,null);
         } else {
             Toast.makeText(getApplicationContext(), "Enable permission first!", Toast.LENGTH_LONG).show();
         }
