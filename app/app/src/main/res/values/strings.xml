@@ -35,5 +35,6 @@
 
 
     <string name="no_device">No Device</string>
-    <string name="send">Send</string>
+    <string name="sendhigh">Send 6</string>
+    <string name="sendlow">Send 4</string>
 </resources>

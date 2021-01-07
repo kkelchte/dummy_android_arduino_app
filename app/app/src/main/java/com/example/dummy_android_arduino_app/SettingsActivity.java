@@ -16,7 +16,8 @@ import androidx.appcompat.widget.SwitchCompat;
 import java.util.Arrays;
 
 public class SettingsActivity extends Activity implements AdapterView.OnItemSelectedListener {
-    Button mButton;
+    Button hButton;
+    Button lButton;
     private static Context mContext;
     protected Spinner baudRateSpinner;
 
@@ -38,8 +39,10 @@ public class SettingsActivity extends Activity implements AdapterView.OnItemSele
         mContext = getApplicationContext();
         setContentView(R.layout.settings_activity);
         baudRateSpinner = findViewById(R.id.baud_rate_spinner);
-        mButton = (Button) findViewById(R.id.mButton);
-        mButton.setEnabled(true);
+        hButton = (Button) findViewById(R.id.hButton);
+        hButton.setEnabled(true);
+        lButton = (Button) findViewById(R.id.lButton);
+        lButton.setEnabled(true);
         connectionSwitchCompat = findViewById(R.id.connection_switch);
         baudRateSpinner.setOnItemSelectedListener(this);
         baudRateSpinner.setSelection(Arrays.binarySearch(BaudRates, baudRate));
@@ -97,8 +100,14 @@ public class SettingsActivity extends Activity implements AdapterView.OnItemSele
     }
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-    public void onClick(View view) {
+    public void onClickHigh(View view) {
         Toast.makeText(getContext(), "Sending 6.", Toast.LENGTH_SHORT).show();
+        usbConnection.send("6");
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    public void onClickLow(View view) {
+        Toast.makeText(getContext(), "Sending 4.", Toast.LENGTH_SHORT).show();
         usbConnection.send("6");
     }
 }
