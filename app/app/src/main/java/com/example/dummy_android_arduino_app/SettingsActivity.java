@@ -24,9 +24,12 @@ public class SettingsActivity extends Activity implements AdapterView.OnItemSele
     protected UsbConnection usbConnection;
     protected boolean usbConnected;
     public int[] BaudRates = {9600, 14400, 19200, 38400, 57600, 115200, 230400, 460800, 921600};
-    private int baudRate = 115200;
+    private int baudRate = 9600;
     protected SwitchCompat connectionSwitchCompat;
 
+    public static Context getContext() {
+        return mContext;
+    }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
@@ -38,8 +41,8 @@ public class SettingsActivity extends Activity implements AdapterView.OnItemSele
         mButton = (Button) findViewById(R.id.mButton);
         mButton.setEnabled(true);
         connectionSwitchCompat = findViewById(R.id.connection_switch);
-        toggleConnection(true);
         baudRateSpinner.setSelection(Arrays.binarySearch(BaudRates, baudRate));
+        toggleConnection(true);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -78,28 +81,23 @@ public class SettingsActivity extends Activity implements AdapterView.OnItemSele
         }
     }
 
-    public static Context getContext() {
-        return mContext;
-    }
-
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-    protected void onClick() {
-        Toast.makeText(getContext(), "Sending 6.", Toast.LENGTH_SHORT).show();
-        usbConnection.send("6");
-    }
-
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        if (parent == baudRateSpinner) {
-            if (this.baudRate != baudRate) {
-                this.baudRate = Integer.parseInt(parent.getItemAtPosition(position).toString());
-            }
-        }
+        //if (parent == baudRateSpinner) {
+        this.baudRate = Integer.parseInt(parent.getItemAtPosition(position).toString());
+        Toast.makeText(getContext(), "Set baudrate: " +  this.baudRate, Toast.LENGTH_SHORT).show();
+        //}
     }
 
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
         // Do nothing.
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    public void onClick(View view) {
+        Toast.makeText(getContext(), "Sending 6.", Toast.LENGTH_SHORT).show();
+        usbConnection.send("6");
     }
 }
 
