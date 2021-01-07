@@ -101,14 +101,22 @@ public class SettingsActivity extends Activity implements AdapterView.OnItemSele
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public void onClickHigh(View view) {
-        Toast.makeText(getContext(), "Sending 6.", Toast.LENGTH_SHORT).show();
-        usbConnection.send("6");
+        if (usbConnected){
+            Toast.makeText(getContext(), "Sending 6.", Toast.LENGTH_SHORT).show();
+            usbConnection.send("6");
+        } else {
+            Toast.makeText(getContext(), "Failed to send 6.", Toast.LENGTH_SHORT).show();
+        }
     }
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public void onClickLow(View view) {
-        Toast.makeText(getContext(), "Sending 4.", Toast.LENGTH_SHORT).show();
-        usbConnection.send("6");
+        if (usbConnected) {
+            Toast.makeText(getContext(), "Sending 4.", Toast.LENGTH_SHORT).show();
+            usbConnection.send("4");
+        } else {
+            Toast.makeText(getContext(), "Failed to send 4.", Toast.LENGTH_SHORT).show();
+        }
     }
 }
 
