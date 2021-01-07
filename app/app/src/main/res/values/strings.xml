@@ -31,6 +31,8 @@
         <item>921600</item>
     </string-array>
 
+    <string name="usb_connection">USB Connection</string>
+
 
     <string name="no_device">No Device</string>
     <string name="send">Send</string>

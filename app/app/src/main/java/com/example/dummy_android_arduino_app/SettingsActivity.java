@@ -41,6 +41,7 @@ public class SettingsActivity extends Activity implements AdapterView.OnItemSele
         mButton = (Button) findViewById(R.id.mButton);
         mButton.setEnabled(true);
         connectionSwitchCompat = findViewById(R.id.connection_switch);
+        baudRateSpinner.setOnItemSelectedListener(this);
         baudRateSpinner.setSelection(Arrays.binarySearch(BaudRates, baudRate));
         toggleConnection(true);
     }
@@ -83,10 +84,11 @@ public class SettingsActivity extends Activity implements AdapterView.OnItemSele
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        //if (parent == baudRateSpinner) {
-        this.baudRate = Integer.parseInt(parent.getItemAtPosition(position).toString());
-        Toast.makeText(getContext(), "Set baudrate: " +  this.baudRate, Toast.LENGTH_SHORT).show();
-        //}
+        if (parent == baudRateSpinner) {
+            this.baudRate = Integer.parseInt(parent.getItemAtPosition(position).toString());
+            Toast.makeText(getContext(), "Setting baudrate to " + this.baudRate,
+                    Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override
