@@ -175,10 +175,9 @@ public class UsbConnection {
                 new Intent("usb.data_received")
                         .putExtra("from", "usb")
                         .putExtra("data", data));
-        Toast.makeText(this.context, "Received " + data,
-                Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this.context, "Received " + data,
+//                Toast.LENGTH_SHORT).show();
     }
-
     public void stopUsbConnection() {
         try {
             if (serialDevice != null) {
