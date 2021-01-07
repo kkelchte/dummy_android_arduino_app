@@ -1,7 +1,5 @@
 package com.example.dummy_android_arduino_app;
 
-import static java.nio.charset.StandardCharsets.UTF_8;
-
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -16,10 +14,14 @@ import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+
 import com.felhr.usbserial.UsbSerialDevice;
 import com.felhr.usbserial.UsbSerialInterface;
+
 import java.io.UnsupportedEncodingException;
 import java.util.Map;
+
+import static java.nio.charset.StandardCharsets.UTF_8;
 
 public class UsbConnection {
     private static final int USB_VENDOR_ID = 6790; // 0x2341; // 9025
@@ -173,6 +175,8 @@ public class UsbConnection {
                 new Intent("usb.data_received")
                         .putExtra("from", "usb")
                         .putExtra("data", data));
+        Toast.makeText(this.context, "Received " + data,
+                Toast.LENGTH_SHORT).show();
     }
 
     public void stopUsbConnection() {

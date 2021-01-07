@@ -64,6 +64,13 @@ public class SettingsActivity extends Activity implements AdapterView.OnItemSele
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    @Override
+    public synchronized void onDestroy() {
+        toggleConnection(false);
+        super.onDestroy();
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     protected void toggleConnection(boolean isChecked) {
         if (isChecked) {
             connectUsb();
@@ -118,6 +125,8 @@ public class SettingsActivity extends Activity implements AdapterView.OnItemSele
             Toast.makeText(getContext(), "Failed to send 4.", Toast.LENGTH_SHORT).show();
         }
     }
+
+
 }
 
 
