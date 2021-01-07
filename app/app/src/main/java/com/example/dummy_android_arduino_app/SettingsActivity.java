@@ -1,151 +1,105 @@
 package com.example.dummy_android_arduino_app;
 
 import android.app.Activity;
+import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
-import android.text.Html;
-import android.text.method.ScrollingMovementMethod;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.physicaloid.lib.Physicaloid;
-import com.physicaloid.lib.usb.driver.uart.ReadLisener;
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.widget.SwitchCompat;
 
-public class SettingsActivity extends Activity {
-    Button btOpen, btClose,  btWrite;
-    EditText etWrite;
-    TextView tvRead;
-    Spinner spBaud;
-    CheckBox cbAutoscroll;
+import java.util.Arrays;
 
-    Physicaloid mPhysicaloid; // initialising library
+public class SettingsActivity extends Activity implements AdapterView.OnItemSelectedListener {
+    Button mButton;
+    private static Context mContext;
+    protected Spinner baudRateSpinner;
 
+    // **** USB **** //
+    protected UsbConnection usbConnection;
+    protected boolean usbConnected;
+    public int[] BaudRates = {9600, 14400, 19200, 38400, 57600, 115200, 230400, 460800, 921600};
+    private int baudRate = 115200;
+    protected SwitchCompat connectionSwitchCompat;
+
+
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mContext = getApplicationContext();
         setContentView(R.layout.settings_activity);
-        btOpen  = (Button) findViewById(R.id.btOpen);
-        btClose = (Button) findViewById(R.id.btClose);
-        btWrite = (Button) findViewById(R.id.btWrite);
-        etWrite = (EditText) findViewById(R.id.etWrite);
-        tvRead  = (TextView) findViewById(R.id.tvRead);
-        spBaud = (Spinner) findViewById(R.id.spinner);
-        cbAutoscroll = (CheckBox)findViewById(R.id.autoscroll);
-        setEnabledUi(false);
-        mPhysicaloid = new Physicaloid(this);
+        baudRateSpinner = findViewById(R.id.baud_rate_spinner);
+        mButton = (Button) findViewById(R.id.mButton);
+        mButton.setEnabled(true);
+        connectionSwitchCompat = findViewById(R.id.connection_switch);
+        toggleConnection(true);
+        baudRateSpinner.setSelection(Arrays.binarySearch(BaudRates, baudRate));
     }
 
-    public void onClickOpen(View v) {
-        String baudtext = spBaud.getSelectedItem().toString();
-        switch (baudtext) {
-            case "300 baud":
-                mPhysicaloid.setBaudrate(300);
-                break;
-            case "1200 baud":
-                mPhysicaloid.setBaudrate(1200);
-                break;
-            case "2400 baud":
-                mPhysicaloid.setBaudrate(2400);
-                break;
-            case "4800 baud":
-                mPhysicaloid.setBaudrate(4800);
-                break;
-            case "9600 baud":
-                mPhysicaloid.setBaudrate(9600);
-                break;
-            case "19200 baud":
-                mPhysicaloid.setBaudrate(19200);
-                break;
-            case "38400 baud":
-                mPhysicaloid.setBaudrate(38400);
-                break;
-            case "576600 baud":
-                mPhysicaloid.setBaudrate(576600);
-                break;
-            case "744880 baud":
-                mPhysicaloid.setBaudrate(744880);
-                break;
-            case "115200 baud":
-                mPhysicaloid.setBaudrate(115200);
-                break;
-            case "230400 baud":
-                mPhysicaloid.setBaudrate(230400);
-                break;
-            case "250000 baud":
-                mPhysicaloid.setBaudrate(250000);
-                break;
-            default:
-                mPhysicaloid.setBaudrate(9600);
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    private void connectUsb() {
+        usbConnection = new UsbConnection(this, baudRate);
+        usbConnected = usbConnection.startUsbConnection();
+    }
+
+    private void disconnectUsb() {
+        if (usbConnection != null) {
+            usbConnection.stopUsbConnection();
+            usbConnection = null;
         }
+        usbConnected = false;
+    }
 
-        if(mPhysicaloid.open()) {
-            setEnabledUi(true);
-
-            if(cbAutoscroll.isChecked())
-            {
-                tvRead.setMovementMethod(new ScrollingMovementMethod());
-            }
-            mPhysicaloid.addReadListener(new ReadLisener() {
-                @Override
-                public void onRead(int size) {
-                    byte[] buf = new byte[size];
-                    mPhysicaloid.read(buf, size);
-                    tvAppend(tvRead, Html.fromHtml("<font color=blue>" + new String(buf) + "</font>"));
-                }
-            });
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    protected void toggleConnection(boolean isChecked) {
+        if (isChecked) {
+            connectUsb();
         } else {
-            Toast.makeText(this, "Cannot open", Toast.LENGTH_LONG).show();
+            disconnectUsb();
         }
-    }
 
-    public void onClickClose(View v) {
-        if(mPhysicaloid.close()) {
-            mPhysicaloid.clearReadListener();
-            setEnabledUi(false);
-        }
-    }
-
-    public void onClickWrite(View v) {
-        String str = etWrite.getText().toString()+"\r\n";
-        if(str.length()>0) {
-            byte[] buf = str.getBytes();
-            mPhysicaloid.write(buf, buf.length);
-        }
-    }
-
-    private void setEnabledUi(boolean on) {
-        if(on) {
-            btOpen.setEnabled(false);
-            spBaud.setEnabled(false);
-            cbAutoscroll.setEnabled(false);
-            btClose.setEnabled(true);
-            btWrite.setEnabled(true);
-            etWrite.setEnabled(true);
+        if (usbConnected) {
+            connectionSwitchCompat.setText(usbConnection.getProductName());
+            Toast.makeText(getContext(), "Connected.", Toast.LENGTH_SHORT).show();
         } else {
-            btOpen.setEnabled(true);
-            spBaud.setEnabled(true);
-            cbAutoscroll.setEnabled(true);
-            btClose.setEnabled(false);
-            btWrite.setEnabled(false);
-            etWrite.setEnabled(false);
+            connectionSwitchCompat.setText("No Device");
+            // Tried to connect but failed
+            if (isChecked) {
+                Toast.makeText(getContext(), "Please check the USB connection.", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(getContext(), "Disconnected.", Toast.LENGTH_SHORT).show();
+            }
         }
     }
 
-    Handler mHandler = new Handler();
-    private void tvAppend(TextView tv, CharSequence text) {
-        final TextView ftv = tv;
-        final CharSequence ftext = text;
-        mHandler.post(new Runnable() {
-            @Override
-            public void run() {
-                ftv.append(ftext);
+    public static Context getContext() {
+        return mContext;
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    protected void onClick() {
+        Toast.makeText(getContext(), "Sending 6.", Toast.LENGTH_SHORT).show();
+        usbConnection.send("6");
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        if (parent == baudRateSpinner) {
+            if (this.baudRate != baudRate) {
+                this.baudRate = Integer.parseInt(parent.getItemAtPosition(position).toString());
             }
-        });
+        }
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+        // Do nothing.
     }
 }
 

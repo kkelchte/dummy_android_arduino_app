@@ -7,15 +7,24 @@ xmlns:tools="http://schemas.android.com/tools"
 android:layout_width="match_parent"
 android:layout_height="match_parent">
 
-    <Button android:id="@+id/btOpen" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignParentLeft="true" android:onClick="onClickOpen" android:text="Open"/>
-    <Button android:id="@+id/btWrite" android:layout_width="wrap_content" android:layout_height="wrap_content" android:onClick="onClickWrite" android:text="Send" android:layout_below="@+id/btClose" android:layout_alignEnd="@+id/SCROLLER_ID"/>
-    <EditText android:id="@+id/etWrite" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignBottom="@+id/btWrite" android:layout_alignLeft="@+id/SCROLLER_ID" android:ems="10" android:singleLine="true" android:layout_toStartOf="@+id/btWrite"/>
-    <Button android:id="@+id/btClose" android:layout_width="wrap_content" android:layout_height="wrap_content" android:onClick="onClickClose" android:text="Close" android:layout_alignTop="@+id/btOpen" android:layout_alignEnd="@+id/SCROLLER_ID"/>
-    <ScrollView android:id="@+id/SCROLLER_ID" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_alignParentLeft="true" android:layout_below="@+id/btWrite" android:fillViewport="true" android:scrollbars="vertical" android:layout_above="@+id/spinner">
-        <TextView android:id="@+id/tvRead" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_alignLeft="@+id/etWrite" android:layout_alignParentBottom="true" android:layout_below="@+id/btWrite"/>
-    </ScrollView>
-    <CheckBox android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Autoscroll" android:id="@+id/autoscroll" android:layout_alignParentBottom="true" android:layout_alignParentStart="true" android:layout_marginBottom="45dp"/>
-    <Spinner android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/spinner" android:entries="@array/baud_arrays" android:prompt="@string/baud_prompt" android:layout_alignBottom="@+id/autoscroll" android:layout_toEndOf="@+id/autoscroll"/>
+    <Button android:id="@+id/mButton" android:layout_width="wrap_content" android:layout_height="wrap_content" android:onClick="onClick" android:text="Send"/>
+    <androidx.appcompat.widget.SwitchCompat
+        android:id="@+id/connection_switch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:checked="false"
+        android:gravity="end"
+        android:text="@string/no_device"
+        android:textColor="@android:color/black" />
 
+    <Spinner
+        android:id="@+id/baud_rate_spinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:gravity="end"
+        android:entries="@array/baud_rates"
+        android:prompt="@string/baud_rate" />
 
 </RelativeLayout>
