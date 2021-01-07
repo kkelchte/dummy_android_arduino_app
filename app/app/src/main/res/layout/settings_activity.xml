@@ -1,41 +1,30 @@
-<!--<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
-<!--    android:layout_width="match_parent"-->
-<!--    android:layout_height="match_parent">-->
-<!--</LinearLayout>-->
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:tools="http://schemas.android.com/tools"
-android:layout_width="match_parent"
-android:layout_height="match_parent">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-<!--<FrameLayout-->
-<!--    android:id="@+id/settings"-->
-<!--    android:layout_width="match_parent"-->
-<!--    android:layout_height="match_parent" />-->
+    <Button android:id="@+id/mButton"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:onClick="onClick"
+        android:text="@string/send"/>
 
-<Button
-    android:id="@+id/mbutton"
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:layout_centerHorizontal="true"
-    android:layout_marginTop="100dp"
-    android:background="#00f"
-    android:drawableRight="@drawable/ic_launcher_foreground"
-    android:padding="5dp"
-    android:textColorHint="#fff"
-    android:textSize="20sp"
-    android:textStyle="bold|italic" />
+    <androidx.appcompat.widget.SwitchCompat
+        android:id="@+id/connection_switch"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:checked="false"
+        android:text="@string/no_device"
+        android:textColor="@android:color/black" />
 
-<Button
-    android:id="@+id/pbutton"
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:layout_centerInParent="true"
-    android:background="#f00"
-    android:drawableLeft="@drawable/ic_launcher_foreground"
-    android:padding="5dp"
-    android:textColorHint="#fff"
-    android:textSize="20sp"
-    android:textStyle="bold|italic" />
+    <Spinner
+        android:id="@+id/baud_rate_spinner"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:gravity="end"
+        android:entries="@array/baud_rates"
+        android:prompt="@string/baud_rate" />
 
-
-</RelativeLayout>
+</LinearLayout>
