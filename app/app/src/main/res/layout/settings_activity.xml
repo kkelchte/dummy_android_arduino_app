@@ -4,46 +4,6 @@
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/connection"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text="@string/usb_connection"
-        android:textColor="@android:color/black" />
-
-    <Spinner
-        android:id="@+id/baud_rate_spinner"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:gravity="end"
-        android:entries="@array/baud_rates"
-        android:prompt="@string/baud_rate" />
-
-
-    <androidx.appcompat.widget.SwitchCompat
-        android:id="@+id/connection_switch"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:checked="false"
-        android:text="@string/no_device"
-        android:textColor="@android:color/black" />
-
-
-    <Button android:id="@+id/hButton"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:onClick="onClickHigh"
-        android:text="@string/sendhigh"/>
-
-    <Button android:id="@+id/lButton"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:onClick="onClickLow"
-        android:text="@string/sendlow"/>
-
-    <TextView
         android:id="@+id/received_data"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
